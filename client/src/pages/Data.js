@@ -1,0 +1,100 @@
+const projectData = [
+  {
+    id: 1,
+    name: "Customer Churn Prediction",
+    objective:
+      "Develop a machine learning model to predict customer churn with 90% accuracy",
+    status: "In Progress",
+    startDate: "2025-01-01",
+    dueDate: "2025-05-15",
+    progress: 65,
+    teamSize: 8,
+  },
+  {
+    id: 2,
+    name: "Data Cloud Implementation",
+    objective:
+      "Migrate on-premise data warehouse to cloud platform for improved scalability",
+    status: "Planning",
+    startDate: "2025-02-10",
+    dueDate: "2025-06-30",
+    progress: 25,
+    teamSize: 6,
+  },
+  {
+    id: 3,
+    name: "MIS Dashboard Development",
+    objective:
+      "Create interactive business intelligence dashboards for executive reporting",
+    status: "Completed",
+    startDate: "2024-11-15",
+    dueDate: "2025-04-05",
+    progress: 100,
+    teamSize: 4,
+  },
+  {
+    id: 4,
+    name: "Service Network Expansion",
+    objective: "Expand service network coverage to five additional regions",
+    status: "In Progress",
+    startDate: "2025-01-20",
+    dueDate: "2025-05-20",
+    progress: 45,
+    teamSize: 12,
+  },
+  {
+    id: 5,
+    name: "Supply Chain Optimization",
+    objective:
+      "Reduce supply chain costs by 15% through process optimization and automation",
+    status: "Planning",
+    startDate: "2025-03-01",
+    dueDate: "2025-08-15",
+    progress: 10,
+    teamSize: 9,
+  },
+  {
+    id: 6,
+    name: "Customer Feedback Integration",
+    objective: "Implement automated feedback collection and analysis system",
+    status: "Completed",
+    startDate: "2024-12-10",
+    dueDate: "2025-03-20",
+    progress: 100,
+    teamSize: 5,
+  },
+  {
+    id: 7,
+    name: "Cybersecurity Enhancement",
+    objective:
+      "Upgrade security infrastructure and implement zero-trust architecture",
+    status: "In Progress",
+    startDate: "2025-01-15",
+    dueDate: "2025-06-15",
+    progress: 40,
+    teamSize: 6,
+  },
+  {
+    id: 8,
+    name: "Market Expansion Strategy",
+    objective:
+      "Develop and implement strategy for entering three new international markets",
+    status: "Planning",
+    startDate: "2025-04-01",
+    dueDate: "2025-10-30",
+    progress: 15,
+    teamSize: 10,
+  },
+  {
+    id: 9,
+    name: "AI-Powered Customer Service",
+    objective:
+      "Deploy AI chatbots to handle 50% of routine customer service inquiries",
+    status: "In Progress",
+    startDate: "2025-02-01",
+    dueDate: "2025-07-15",
+    progress: 35,
+    teamSize: 8,
+  },
+];
+export default projectData;

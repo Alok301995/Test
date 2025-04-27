@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="py-4 px-6 bg-gray-800 text-white text-center border-t border-gray-700 ml-20">
+    <footer className="py-4 px-6 bg-gray-800 text-white text-center border-t border-gray-700">
       <div className="container mx-auto flex items-center justify-between">
         <p className="text-sm">
           © {new Date().getFullYear()} Your Company. All rights reserved.

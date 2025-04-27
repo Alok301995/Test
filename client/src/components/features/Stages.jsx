@@ -7,10 +7,6 @@ import {
   BarChart,
   Rocket,
   Check,
-  ChevronRight,
-  ChevronLeft,
-  Info,
-  Save,
 } from "lucide-react";
 
 // Define the data for each stage
@@ -140,11 +136,9 @@ function Stages({ onStageChange = () => {}, renderStageContent = () => null }) {
 
       {/* Stage Icons */}
       <div
-        className={`transition-all duration-500 border border-gray-200 bg-gradient-to-br from-white to-gray-50  rounded-md ${
-          isAnimating ? "opacity-70 scale-98" : "opacity-100 scale-100"
-        }`}
+        className={`p-2 transition-all duration-500 border border-gray-200 bg-gradient-to-br from-white to-gray-50  rounded-md `}
       >
-        <div className="flex items-center justify-between max-w-4xl mx-auto px-2 py-2 overflow-x-auto hide-scrollbar">
+        <div className="flex items-center justify-between px-2 py-2 overflow-x-auto hide-scrollbar">
           {stagesData.map((stage, index) => {
             // Determine state of this stage
             const isSelected = selectedStage === stage.name;
@@ -156,7 +150,7 @@ function Stages({ onStageChange = () => {}, renderStageContent = () => null }) {
                 {/* Stage Icon */}
                 <div
                   className={`
-                    flex flex-col items-center cursor-pointer group 
+                    flex flex-col items-center cursor-pointer group
                     transition-all duration-300 ease-in-out min-w-max
                     ${isSelected ? "scale-105" : "hover:scale-105"}
                   `}
@@ -203,7 +197,7 @@ function Stages({ onStageChange = () => {}, renderStageContent = () => null }) {
                   {/* Stage Name */}
                   <span
                     className={`
-                      text-xs font-medium text-center tracking-tight max-w-24 truncate
+                      text-xs font-medium text-center tracking-tight max-w-24 
                       ${
                         isCompleted
                           ? "text-green-700"
@@ -235,78 +229,9 @@ function Stages({ onStageChange = () => {}, renderStageContent = () => null }) {
           })}
         </div>
       </div>
-      {/* <div className="flex flex-wrap justify-end items-center mt-6 mx-2"> */}
-      {/* <div className="flex space-x-3"> */}
-      {/* Previous Button */}
-      {/* <button
-            onClick={handlePreviousStage}
-            disabled={currentStage <= 1}
-            className={`
-              flex items-center space-x-1 px-4 py-2 rounded-md text-sm font-medium
-              ${
-                currentStage > 1
-                  ? "bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm"
-                  : "bg-gray-50 text-gray-400 cursor-not-allowed"
-              }
-            `}
-          >
-            <ChevronLeft size={16} />
-            <span>Previous</span>
-          </button> */}
-
-      {/* Next Button */}
-      {/* <button
-            onClick={handleNextStage}
-            disabled={currentStage >= stagesData.length}
-            className={`
-              flex items-center space-x-1 px-4 py-2 rounded-md text-sm font-medium shadow-sm
-              ${
-                currentStage < stagesData.length
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-blue-300 text-white cursor-not-allowed"
-              }
-            `}
-          >
-            <span>
-              {currentStage >= stagesData.length ? "Complete" : "Next"}
-            </span>
-            <ChevronRight size={16} />
-          </button> */}
-
-      {/* Save & Next Button */}
-      {/* <button
-            onClick={handleSaveAndNext}
-            disabled={currentStage >= stagesData.length}
-            className={`
-              flex items-center space-x-1 px-4 py-2 rounded-md text-sm font-medium shadow-sm
-              ${
-                currentStage < stagesData.length
-                  ? "bg-green-600 text-white hover:bg-green-700"
-                  : "bg-green-300 text-white cursor-not-allowed"
-              }
-            `}
-          >
-            <Save size={16} className="mr-1" />
-            <span>Save & Next</span>
-          </button> */}
-      {/* </div> */}
-      {/* </div> */}
 
       {/* Stage Content */}
       <div className="mt-6 mb-6">{renderStageContent}</div>
-
-      {/* Navigation Buttons */}
-
-      {/* Custom styles for hiding scrollbar while maintaining functionality */}
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }

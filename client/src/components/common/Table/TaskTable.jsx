@@ -178,7 +178,7 @@ function TaskTable({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <h2 className="text-lg font-semibold flex items-center text-gray-800">
           <ClipboardList size={20} className="mr-2 text-blue-600" />
-          Task Management
+          Stage Tasks
           <span className="ml-2 text-sm bg-blue-100 text-blue-800 font-medium px-2.5 py-0.5 rounded-full">
             {tasks.length}
           </span>

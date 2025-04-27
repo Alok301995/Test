@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
-  FolderOpen,
   Calendar,
   ChevronLeft,
   ChevronRight,
   Filter,
-  ArrowUpRight,
-  MoreHorizontal,
   Clock,
-  Users,
-  Edit,
-  Trash2,
-  Star,
-  Share2,
   ChevronsLeft,
   ChevronsRight,
   CheckCircle2,
   XCircle,
 } from "lucide-react";
+
+// Custom Imports
+import { projectTableHeaders } from "../../../utils/Config";
 
 export default function ProjectsTable({
   projects,
@@ -28,11 +23,8 @@ export default function ProjectsTable({
   clearFilters,
   onProjectClick,
 }) {
-  const [hoveredRow, setHoveredRow] = useState(null);
-  const [activeDropdown, setActiveDropdown] = useState(null);
   const [pageSizeOptions] = useState([5, 10, 15, 20, 50]);
   const [pageSize, setPageSize] = useState(projectsPerPage);
-  const [isFiltersCleared, setIsFiltersCleared] = useState(false);
 
   // Filter projects based on current filters
   const filteredProjects = projects.filter((project) => {
@@ -76,16 +68,6 @@ export default function ProjectsTable({
   useEffect(() => {
     setCurrentPage(1);
   }, [pageSize, setCurrentPage]);
-
-  // Reset filter flag after animation completes
-  useEffect(() => {
-    if (isFiltersCleared) {
-      const timer = setTimeout(() => {
-        setIsFiltersCleared(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isFiltersCleared]);
 
   // Pagination
   const indexOfLastProject = currentPage * pageSize;
@@ -140,35 +122,6 @@ export default function ProjectsTable({
     }
   };
 
-  // Function to handle project click
-  const handleProjectClick = (project) => {
-    if (onProjectClick) {
-      onProjectClick(project);
-    }
-  };
-
-  // Handle clearing filters with transition
-  const handleClearFilters = () => {
-    setIsFiltersCleared(true);
-    clearFilters();
-  };
-
-  // Toggle dropdown menu
-  const toggleDropdown = (projectId, e) => {
-    e.stopPropagation();
-    setActiveDropdown(activeDropdown === projectId ? null : projectId);
-  };
-
-  // Jump to first page
-  const goToFirstPage = () => {
-    setCurrentPage(1);
-  };
-
-  // Jump to last page
-  const goToLastPage = () => {
-    setCurrentPage(totalPages);
-  };
-
   // Format date to be more readable
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -200,17 +153,15 @@ export default function ProjectsTable({
     return formattedDate;
   };
 
-  // Handle click outside to close dropdown
-  React.useEffect(() => {
-    const handleClickOutside = () => {
-      setActiveDropdown(null);
-    };
+  // Jump to first page
+  const goToFirstPage = () => {
+    setCurrentPage(1);
+  };
 
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  // Jump to last page
+  const goToLastPage = () => {
+    setCurrentPage(totalPages);
+  };
 
   // Generate page numbers for pagination
   const getPageNumbers = () => {
@@ -262,42 +213,14 @@ export default function ProjectsTable({
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr className="bg-gray-50">
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Project
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Category
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Status
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Due Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Progress
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Actions
-                  </th>
+                  {projectTableHeaders.map((name, index) => (
+                    <th
+                      key={index}
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                    >
+                      {name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -306,52 +229,37 @@ export default function ProjectsTable({
                   return (
                     <tr
                       key={project.id}
-                      onClick={() => handleProjectClick(project)}
-                      className={`transition-colors duration-300 ease-in-out cursor-pointer ${
-                        hoveredRow === project.id
-                          ? "bg-blue-50"
-                          : "hover:bg-gray-50"
-                      }`}
-                      onMouseEnter={() => setHoveredRow(project.id)}
-                      onMouseLeave={() => setHoveredRow(null)}
+                      className={`transition-colors duration-300 ease-in-out hover:bg-gray-200`}
                     >
-                      <td className="px-6 py-5 whitespace-nowrap">
+                      <td className="p-2 whitespace-nowrap">
                         <div className="flex items-center group">
-                          <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow-sm border border-blue-200 transition-all duration-300 group-hover:shadow-md">
-                            <FolderOpen
-                              size={22}
-                              className="text-blue-600 transition-transform duration-300 group-hover:scale-110"
-                            />
-                          </div>
                           <div className="ml-4 flex items-center">
                             <div>
-                              <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 flex items-center">
+                              <div className="text-md font-semibold text-gray-900">
                                 {project.name}
-                                <ArrowUpRight
-                                  size={16}
-                                  className="ml-1 opacity-0 group-hover:opacity-100 transition-all duration-300 text-blue-500 transform group-hover:translate-x-1"
-                                />
-                              </div>
-                              <div className="flex items-center text-xs text-gray-500 mt-1 transition-all duration-300 group-hover:text-gray-700">
-                                <Users size={12} className="mr-1" />
-                                <span>Team of {project.teamSize || 5}</span>
                               </div>
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-5 whitespace-nowrap">
-                        <div className="text-sm text-gray-700 font-medium bg-gray-100 px-3 py-1 rounded-full inline-block border border-gray-200 transition-all duration-300 hover:bg-gray-200">
-                          {project.category}
+                        <div className="text-sm max-w-xl text-gray-700 font-medium text-wrap">
+                          {project.objective}
                         </div>
                       </td>
-                      <td className="px-6 py-5 whitespace-nowrap">
+                      <td className="p-2 whitespace-nowrap">
                         <span
-                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full items-center transition-all duration-300 ${statusInfo.color}`}
+                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-sm items-center transition-all duration-300 ${statusInfo.color}`}
                         >
                           {statusInfo.icon}
                           {project.status}
                         </span>
+                      </td>
+                      <td className="px-6 py-5 whitespace-nowrap">
+                        <div className="flex items-center text-sm text-gray-700 transition-colors duration-300">
+                          <Calendar size={16} className="mr-2 text-gray-500" />
+                          {formatDate(project.startDate)}
+                        </div>
                       </td>
                       <td className="px-6 py-5 whitespace-nowrap">
                         <div className="flex items-center text-sm text-gray-700 transition-colors duration-300">
@@ -370,11 +278,6 @@ export default function ProjectsTable({
                         </div>
                         <div className="flex justify-between text-xs mt-2 text-gray-600 font-medium transition-colors duration-300">
                           <span>{project.progress}% complete</span>
-                          {project.progress < 100 && (
-                            <span className="text-blue-600">
-                              {100 - project.progress}% remaining
-                            </span>
-                          )}
                         </div>
                       </td>
                       <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium relative">
@@ -383,67 +286,16 @@ export default function ProjectsTable({
                           className="relative inline-block"
                         >
                           <button
-                            onClick={(e) => toggleDropdown(project.id, e)}
-                            className="text-gray-400 hover:text-gray-500 focus:outline-none p-1.5 rounded-full hover:bg-gray-100 transition-colors duration-300"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onProjectClick && onProjectClick(project);
+                            }}
+                            className="w-full text-left block px-4 py-2 text-sm bg-blue-500 transition-colors duration-200 rounded-md text-white cursor-pointer"
                           >
-                            <MoreHorizontal size={18} />
-                          </button>
-
-                          {activeDropdown === project.id && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200 transition-opacity duration-300 animate-fadeIn">
-                              <div className="py-1 rounded-md bg-white shadow-xs">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleProjectClick(project);
-                                  }}
-                                  className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
-                                >
-                                  <div className="flex items-center">
-                                    <ArrowUpRight
-                                      size={16}
-                                      className="mr-2 text-blue-500"
-                                    />
-                                    View Details
-                                  </div>
-                                </button>
-                                <button className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                                  <div className="flex items-center">
-                                    <Edit
-                                      size={16}
-                                      className="mr-2 text-gray-500"
-                                    />
-                                    Edit Project
-                                  </div>
-                                </button>
-                                <button className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                                  <div className="flex items-center">
-                                    <Share2
-                                      size={16}
-                                      className="mr-2 text-gray-500"
-                                    />
-                                    Share Project
-                                  </div>
-                                </button>
-                                <button className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                                  <div className="flex items-center">
-                                    <Star
-                                      size={16}
-                                      className="mr-2 text-yellow-500"
-                                    />
-                                    Mark as Favorite
-                                  </div>
-                                </button>
-                                <div className="border-t border-gray-100 my-1"></div>
-                                <button className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
-                                  <div className="flex items-center">
-                                    <Trash2 size={16} className="mr-2" />
-                                    Delete Project
-                                  </div>
-                                </button>
-                              </div>
+                            <div className="flex items-center">
+                              View Details
                             </div>
-                          )}
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -586,13 +438,7 @@ export default function ProjectsTable({
         </>
       ) : (
         /* No matching results from filters */
-        <div
-          className={`p-12 text-center transition-all duration-500 ${
-            isFiltersCleared
-              ? "opacity-0 transform scale-95"
-              : "opacity-100 transform scale-100"
-          }`}
-        >
+        <div className="p-12 text-center">
           <div className="flex justify-center">
             <div className="bg-gray-100 p-4 rounded-full transition-all duration-300 hover:bg-gray-200">
               <Filter size={40} className="text-gray-400" />
@@ -605,7 +451,7 @@ export default function ProjectsTable({
             Try adjusting your search or filter criteria
           </p>
           <button
-            onClick={handleClearFilters}
+            onClick={clearFilters}
             className="mt-5 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:shadow-sm"
           >
             Clear all filters

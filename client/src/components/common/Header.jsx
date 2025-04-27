@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white shadow-md z-10 ml-20">
+    <header className="flex items-center justify-between px-6 py-4 bg-white shadow-md z-30">
       {/* Logo on the left */}
       <div className="flex items-center">
         <div className="rounded-md flex items-center justify-center">

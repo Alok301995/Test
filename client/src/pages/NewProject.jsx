@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// Custom Imports
+import { projectTemplate } from "../utils/Config";
+
 function NewProject() {
   const [formData, setFormData] = useState({
     projectName: "",
@@ -12,13 +15,6 @@ function NewProject() {
   });
 
   // Sample templates
-  const templates = [
-    { id: "blank", name: "Blank Project" },
-    { id: "agile", name: "Agile Development" },
-    { id: "waterfall", name: "Waterfall Project" },
-    { id: "research", name: "Research & Development" },
-    { id: "maintenance", name: "System Maintenance" },
-  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,12 +84,12 @@ function NewProject() {
               <select
                 id="template"
                 name="template"
-                value={formData.template}
+                value={formData.projectTemplate}
                 onChange={handleTemplateChange}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white"
               >
                 <option value="">Select a template...</option>
-                {templates.map((template) => (
+                {projectTemplate.map((template) => (
                   <option key={template.id} value={template.id}>
                     {template.name}
                   </option>

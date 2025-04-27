@@ -4,18 +4,7 @@ import TaskTable from "./Table/TaskTable";
 import StageDateSelector from "./ProjectDateSelector";
 import ActionButtons from "./ActionButton";
 import AddTaskModal from "./AddTaskModal";
-import {
-  Calendar,
-  AlertCircle,
-  PieChart,
-  User,
-  BarChart4,
-  ChevronRight,
-  CheckCheck,
-  CheckCircle2,
-  AlertTriangle,
-  Clock,
-} from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 export default function ProjectTask() {
   // Sample tasks data
@@ -322,23 +311,10 @@ export default function ProjectTask() {
   };
 
   return (
-    <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-      {/* Project header with breadcrumb */}
-      <div className="mb-6 border-b border-gray-200 pb-4">
-        <div className="flex items-center text-xs text-gray-500 mb-2">
-          <span>Projects</span>
-          <ChevronRight size={14} className="mx-1" />
-          <span>Development</span>
-          <ChevronRight size={14} className="mx-1" />
-          <span className="font-medium text-gray-700">Task Management</span>
-        </div>
-        <h1 className="text-xl font-bold text-gray-800">
-          Project Task Management
-        </h1>
-      </div>
-
+    <div className="bg-white p-4 rounded-lg shadow-sm">
       {/* Stages component */}
       <div className="mb-8">
+        <h1 className="text-xl font-bold text-gray-800">Stages</h1>
         <Stages
           onStageChange={handleStageChange}
           renderStageContent={renderStageContent}
@@ -346,163 +322,7 @@ export default function ProjectTask() {
         />
       </div>
 
-      {/* Stage info summary */}
-      <div className="mb-6 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3 border-b border-gray-200">
-          <h2 className="text-sm font-semibold text-gray-800 flex items-center">
-            <span className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mr-2 text-blue-600">
-              {currentStage}
-            </span>
-            {getStageName(currentStage)} Stage
-          </h2>
-        </div>
-
-        {/* Stage statistics */}
-        <div className="p-4 flex justify-center">
-          <div className="flex gap-4">
-            {/* Task count */}
-            <div className="bg-slate-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-slate-200 flex items-center justify-center mr-3">
-                <BarChart4 size={20} className="text-slate-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-slate-500">
-                  Total Tasks
-                </p>
-                <p className="text-xl font-bold text-slate-800">
-                  {taskStats.total}
-                </p>
-              </div>
-            </div>
-
-            {/* Completion rate */}
-            {/* <div className="bg-emerald-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-emerald-200 flex items-center justify-center mr-3">
-                <PieChart size={20} className="text-emerald-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-emerald-600">
-                  Completion Rate
-                </p>
-                <p className="text-xl font-bold text-emerald-700">
-                  {completionPercentage}%
-                </p>
-              </div>
-            </div> */}
-
-            {/* Timeline */}
-            <div className="bg-blue-50 rounded-lg p-4 flex flex-col">
-              <div className="flex items-center mb-2">
-                <Calendar size={16} className="text-blue-600 mr-2" />
-                <p className="text-xs font-medium text-blue-700">Timeline</p>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <p className="text-xs text-gray-500">Start</p>
-                  <p className="text-sm font-semibold text-gray-800">
-                    {formatDate(stageDates[currentStage]?.startDate)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">End</p>
-                  <p className="text-sm font-semibold text-gray-800">
-                    {formatDate(stageDates[currentStage]?.endDate)}
-                  </p>
-                </div>
-              </div>
-            </div>
-            {/* Pending State */}
-            <div className="bg-amber-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-amber-200 flex items-center justify-center mr-3">
-                <Clock size={20} className="text-amber-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-amber-500">
-                  Pending Tasks
-                </p>
-                <p className="text-xl font-bold text-amber-800">
-                  {taskStats.pending}
-                </p>
-              </div>
-            </div>
-
-            {/* Critical State */}
-            <div className="bg-red-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-red-200 flex items-center justify-center mr-3">
-                <AlertTriangle size={20} className="text-red-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-red-500">
-                  Critical Tasks
-                </p>
-                <p className="text-xl font-bold text-red-800">
-                  {taskStats.critical}
-                </p>
-              </div>
-            </div>
-            {/*  */}
-
-            {/* Completion State */}
-            <div className="bg-emerald-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-emerald-200 flex items-center justify-center mr-3">
-                <CheckCircle2 size={20} className="text-emerald-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-emerald-500">
-                  Completed Tasks
-                </p>
-                <p className="text-xl font-bold text-emerald-800">
-                  {taskStats.completed}
-                </p>
-              </div>
-            </div>
-
-            {/* Assigned team members */}
-            {/* <div className="bg-indigo-50 rounded-lg p-4 flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-indigo-200 flex items-center justify-center mr-3">
-                <User size={20} className="text-indigo-700" />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-indigo-600">
-                  Team Members
-                </p>
-                <div className="flex -space-x-2 mt-1">
-                  <div className="w-7 h-7 rounded-full bg-blue-200 flex items-center justify-center text-blue-700 font-medium text-xs ring-2 ring-white">
-                    JD
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-medium text-xs ring-2 ring-white">
-                    JS
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-green-200 flex items-center justify-center text-green-700 font-medium text-xs ring-2 ring-white">
-                    MJ
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-medium text-xs ring-2 ring-white">
-                    +2
-                  </div>
-                </div>
-              </div>
-            </div> */}
-          </div>
-        </div>
-      </div>
-
       {/* Show stage content (date picker if needed) */}
-      {showDateSelection && (
-        <div className="mb-6 bg-white rounded-lg border border-blue-200 shadow-sm p-5">
-          <h3 className="text-sm font-medium text-gray-700 mb-4 flex items-center">
-            <Calendar size={16} className="text-blue-600 mr-2" />
-            Set Stage Timeline
-          </h3>
-          <StageDateSelector
-            stageNumber={currentStage}
-            stageDates={stageDates}
-            onDateChange={handleStageDateChange}
-            onSubmit={handleStageDateSubmit}
-          />
-        </div>
-      )}
-
-      {/* Warning if no dates are set */}
       {!stageHasDates && (
         <div className="mb-6 bg-amber-50 p-4 rounded-lg border border-amber-200 flex items-start">
           <AlertCircle
@@ -521,6 +341,18 @@ export default function ProjectTask() {
           </div>
         </div>
       )}
+      {showDateSelection && (
+        <div className="mb-6 bg-white rounded-lg border border-blue-200 shadow-sm p-5">
+          <StageDateSelector
+            stageNumber={currentStage}
+            stageDates={stageDates}
+            onDateChange={handleStageDateChange}
+            onSubmit={handleStageDateSubmit}
+          />
+        </div>
+      )}
+
+      {/* Warning if no dates are set */}
 
       {/* Action buttons row */}
       <div className="mb-6 flex justify-end">
@@ -536,34 +368,6 @@ export default function ProjectTask() {
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Stage Tasks
         </h2>
-
-        {/* Task status summary */}
-        {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-3 flex justify-between items-center">
-            <span className="text-sm text-gray-600">Completed</span>
-            <span className="bg-green-100 text-green-800 font-medium px-2.5 py-0.5 rounded-full text-xs">
-              {taskStats.completed}
-            </span>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-3 flex justify-between items-center">
-            <span className="text-sm text-gray-600">In Progress</span>
-            <span className="bg-blue-100 text-blue-800 font-medium px-2.5 py-0.5 rounded-full text-xs">
-              {taskStats.inProgress}
-            </span>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-3 flex justify-between items-center">
-            <span className="text-sm text-gray-600">Not Started</span>
-            <span className="bg-gray-100 text-gray-800 font-medium px-2.5 py-0.5 rounded-full text-xs">
-              {taskStats.notStarted}
-            </span>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-3 flex justify-between items-center">
-            <span className="text-sm text-gray-600">Under Review</span>
-            <span className="bg-yellow-100 text-yellow-800 font-medium px-2.5 py-0.5 rounded-full text-xs">
-              {taskStats.underReview}
-            </span>
-          </div>
-        </div> */}
 
         {/* Task table */}
         <TaskTable
